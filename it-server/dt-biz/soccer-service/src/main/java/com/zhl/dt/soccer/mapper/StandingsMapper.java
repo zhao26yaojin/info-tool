@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhl.dt.soccer.model.entity.FbStandings;
 import com.zhl.dt.soccer.model.qo.StandingsQO;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

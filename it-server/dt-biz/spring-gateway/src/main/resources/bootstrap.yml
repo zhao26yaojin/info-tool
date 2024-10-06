@@ -1,5 +1,5 @@
 server:
-  port: 9012
+  port: 3012
   servlet:
     context-path: /gateway
 
