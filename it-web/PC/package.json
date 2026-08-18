@@ -1,14 +1,17 @@
 {
-  "name": "data-tool",
+  "name": "info-tool",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "build": "vite build",
     "build:test": "vite build --mode test"
   },
   "dependencies": {
+    "@vitejs/plugin-vue": "^4.4.1",
     "axios": "1.6.2",
     "element-plus": "^2.4.3",
+    "pinia": "2.1.7",
+    "vite": "^4.5.0",
     "vue": "^3.0.4",
     "vue-router": "4.2.5"
   },

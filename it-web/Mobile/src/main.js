@@ -1,16 +1,13 @@
-import {
-	createSSRApp
-} from "vue";
-import App from "./App.vue";
+import uviewPlus from "@/uview-plus"
+import App from "./App"
+import "@/assets/css/reset.css"
+import { createSSRApp } from "vue"
 
-import uviewPlus from '@/uview-plus'
+const createApp = () => {
+	const app = createSSRApp(App)
 
-import './assets/css/reset.css'
-
-export function createApp() {
-	const app = createSSRApp(App);
 	app.use(uviewPlus)
-	return {
-		app,
-	};
+
+	return {app: app }
 }
+export {createApp}

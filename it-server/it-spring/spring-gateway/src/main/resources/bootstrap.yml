@@ -1,0 +1,21 @@
+server:
+  port: 3033
+  servlet:
+    context-path: /gateway
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      server-addr: @nacos.url@
+      username: nacos
+      password: @nacos.pw@
+      discovery:
+        namespace: @profiles.active@
+        group: @app.group@
+      config:
+        namespace: @profiles.active@
+        group: @app.group@
+        file-extension: yml
