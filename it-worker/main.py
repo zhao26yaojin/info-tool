@@ -1,22 +1,26 @@
-import argparse
-import json
-import sys
+# This is a sample Python script.
+from typing import List
 
-import tasks
-from config import setup_logging
+from common.logger import setup_logging
+from crawlers.task import crawls
+from enums.task_enum import TaskEnum
+
+# Press ⌃R to execute it or replace it with your code.
+# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def main():
-    parser = argparse.ArgumentParser(description="it-worker crawler CLI")
-    parser.add_argument("--task", choices=sorted(tasks.TASKS), required=True)
-    args = parser.parse_args()
+def parse_tasks(value: str) -> List[TaskEnum]:
+    if not value:
+        return list(TaskEnum)
+    return [TaskEnum(item.strip()) for item in value.split(",") if item.strip()]
 
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
     setup_logging()
-    result = tasks.TASKS[args.task]()
-    print(json.dumps(result, ensure_ascii=False, indent=2))
 
-    sys.exit(1 if result and tasks.has_errors(result) else 0)
+    task = ''
 
+    crawls(task)
 
-if __name__ == "__main__":
-    main()
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/

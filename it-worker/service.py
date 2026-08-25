@@ -1,11 +1,13 @@
 import functools
 import hmac
 import logging
+from typing import Any, Callable, Tuple, Union
 
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 
-import tasks
-from config import API_TOKEN, HTTP_PORT, setup_logging
+from common.logger import setup_logging
+from config import API_TOKEN, HTTP_PORT
+from crawlers.task import crawls
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -13,10 +15,10 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 
-def require_token(view):
+def require_token(view: Callable[..., Any]) -> Callable[..., Any]:
     @functools.wraps(view)
-    def wrapped(*args, **kwargs):
-        token = request.headers.get("X-API-Token", "")
+    def wrapped(*args: Any, **kwargs: Any) -> Any:
+        token: str = request.headers.get("X-API-Token", "")
         if not API_TOKEN or not hmac.compare_digest(token, API_TOKEN):
             return jsonify({"error": "unauthorized"}), 401
         return view(*args, **kwargs)
@@ -25,24 +27,20 @@ def require_token(view):
 
 
 @app.get("/health")
-def health():
+def health() -> Response:
     return jsonify({"status": "ok"})
 
 
 @app.post("/crawl/<task_name>")
 @require_token
-def crawl(task_name):
-    if task_name not in tasks.TASKS:
-        return jsonify({"error": "unknown task '{}'".format(task_name)}), 404
-
+def crawl(task_name: str) -> Union[Response, Tuple[Response, int]]:
     logger.info("triggered task=%s", task_name)
     try:
-        result = tasks.TASKS[task_name]()
+        crawls(task_name)
     except NotImplementedError as exc:
         return jsonify({"error": str(exc)}), 501
 
-    status_code = 207 if result and tasks.has_errors(result) else 200
-    return jsonify(result), status_code
+    return 200
 
 
 if __name__ == "__main__":
