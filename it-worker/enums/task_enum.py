@@ -1,8 +1,5 @@
-import enum
+from enum import Enum
 
-
-class TaskEnum(enum.Enum):
-    TEAM = 'team'
-    STANDING = 'standing'
-    COUNTRY = 'country'
-    ALL = 'all'
+class TaskEnum(Enum):
+	COUNTRY = 'country'
+	TEAM = 'team'

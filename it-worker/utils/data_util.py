@@ -5,25 +5,27 @@ from enums.opt_enum import OptEnum
 from enums.task_enum import TaskEnum
 
 
-TASKS = {TaskEnum.TEAM: False}
-
-
-def get_tasks(task_param: str | None) -> list[TaskEnum]:
-    # 默认task（选择TASKS中value为True的item）
+def format_task_param(task_param: str) -> str:
     if not task_param:
-        return [k for k, v in TASKS.items() if v]
+        return ''
 
     if task_param == 'all':
-        return list(TASKS.keys())
+        return ''
 
-    return [TaskEnum(p) for p in task_param.split(',') if p.strip()]
+    return task_param
 
 
-def get_opt(opt_param: str | None) -> OptEnum:
-    if not opt_param:
-        return OptEnum.SYNC
+def get_tasks(task_param: str) -> Dict[TaskEnum, OptEnum]:
+    tasks = {}
 
-    return OptEnum(opt_param)
+    for item in task_param.split(';'):
+        opt, task_names = item.split('=', 1)
+        opt_enum = OptEnum(opt)
+
+        for task_name in task_names.split(','):
+            tasks[TaskEnum(task_name)] = opt_enum
+
+    return tasks
 
 
 HEADERS: Dict[str, str] = {

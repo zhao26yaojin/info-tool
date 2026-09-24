@@ -1,7 +1,10 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class Team:
-    id: int
-    name: str
+	id: int
+
+	name: str
+
+	country_name: str
+
