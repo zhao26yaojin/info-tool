@@ -5,3 +5,4 @@ class TeamCrawler(CusCrawlerBase[Team]):
 	def crawl(self):
 		pass
 
+

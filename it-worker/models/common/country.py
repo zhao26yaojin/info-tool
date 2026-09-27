@@ -8,3 +8,5 @@ class Country:
 
 	avatar: str
 
+	source_id: int
+

@@ -5,3 +5,4 @@ class CountryCrawler(CusCrawlerBase[Country]):
 	def crawl(self):
 		pass
 
+

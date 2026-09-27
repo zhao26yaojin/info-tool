@@ -8,3 +8,5 @@ class Team:
 
 	country_name: str
 
+	source_id: int
+

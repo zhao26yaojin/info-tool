@@ -3,13 +3,31 @@ from models.fb.team import Team
 
 class TeamDb(DbBase[Team]):
 	upsert_sql: str = """
-        INSERT INTO fb_team (id, name, league, created_at)
-        VALUES (%s, %s, %s, NOW())
+        INSERT INTO fb_team (id, name, country_name, source_id)
+        VALUES (%s, %s, %s, %s) AS row
         ON DUPLICATE KEY UPDATE
-            name = VALUES(name),
-            league = VALUES(league),
-            updated_at = NOW();
+            name = row.name,
+			country_name = row.country_name;
     """
 
+	insert_sql: str = """
+            INSERT INTO fb_team (id, name, country_name, source_id)
+            VALUES (%s, %s, %s, %s)
+        """
+
+	select_source_ids_sql: str = """
+            SELECT source_id
+            FROM fb_team
+        """
+
+	delete_sql: str = """
+            DELETE FROM fb_team
+            WHERE id = %s
+        """
+
 	def to_upsert_params(self, item: Team):
-		return (item.id, item.league_id, item.name)
+		return item.id, item.name, item.country_name, item.source_id
+
+	def to_insert_params(self, item: Team):
+		return item.id, item.name, item.country_name, item.source_id
+
