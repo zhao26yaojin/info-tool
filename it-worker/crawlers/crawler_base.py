@@ -19,6 +19,8 @@ class CrawlerBase(ABC, Generic[T]):
     def __init__(self) -> None:
         self.results: List[T] = []
 
+        self.keys = set()
+
         self.session: requests.Session = requests.Session()
         self.session.headers.update(HEADERS)
 
@@ -32,3 +34,10 @@ class CrawlerBase(ABC, Generic[T]):
         response: requests.Response = self.session.get(url, params=params, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         return response.json()
+
+    def add_result(self, result: T, key) -> None:
+        if key in self.keys:
+            return
+
+        self.results.append(result)
+        self.keys.add(key)

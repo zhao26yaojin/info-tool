@@ -1,6 +1,6 @@
 from typing import Dict, Any, List, TypeVar
 
-from crawlers.base import CrawlerBase
+from crawlers.crawler_base import CrawlerBase
 from utils.cus_data_util import MATCH_URL
 
 # 定义泛型类型变量 T

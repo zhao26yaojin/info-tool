@@ -7,10 +7,10 @@ from enums.task_enum import TaskEnum
 
 def format_task_param(task_param: str) -> str:
     if not task_param:
-        return ''
+        return 'merge=country;sync=team'
 
     if task_param == 'all':
-        return ''
+        return 'merge=country;sync=team'
 
     return task_param
 
