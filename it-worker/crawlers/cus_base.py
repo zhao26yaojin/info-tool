@@ -7,8 +7,8 @@ from utils.cus_data_util import MATCH_URL
 T = TypeVar("T")
 
 class CusCrawlerBase(CrawlerBase[T]):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, table):
+        super().__init__(table)
 
         self._match_datas: List[Dict[str, Any]] = []
 

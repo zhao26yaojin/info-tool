@@ -4,10 +4,10 @@ from models.common.country import Country
 class CountryDb(DbBase[Country]):
 	upsert_sql: str = """
         INSERT INTO common_country (id, name, avatar, source_id)
-        VALUES (%s, %s, %s, %s) AS row
+        VALUES (%s, %s, %s, %s) AS new
         ON DUPLICATE KEY UPDATE
-            name = row.name,
-			avatar = row.avatar;
+            name = new.name,
+			avatar = new.avatar;
     """
 
 	insert_sql: str = """

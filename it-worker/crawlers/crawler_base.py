@@ -3,11 +3,9 @@ from abc import ABC
 from typing import Dict, Any, TypeVar, Generic, List
 
 import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 from config import REQUEST_TIMEOUT
-from utils.data_util import HEADERS
+from utils.data_util import init_session
 
 logger = logging.getLogger(__name__)
 
@@ -16,18 +14,14 @@ T = TypeVar("T")
 
 
 class CrawlerBase(ABC, Generic[T]):
-    def __init__(self) -> None:
+    def __init__(self, table: str = ""):
+        self.table = table
+
         self.results: List[T] = []
 
         self.keys = set()
 
-        self.session: requests.Session = requests.Session()
-        self.session.headers.update(HEADERS)
-
-        retry: Retry = Retry(total=2, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
-        adapter: HTTPAdapter = HTTPAdapter(max_retries=retry)
-        self.session.mount("https://", adapter)
-        self.session.mount("http://", adapter)
+        self.session: requests.Session = init_session()
 
     def get_json(self, url: str, params: Dict[str, Any] | None = None) -> Any:
         logger.info("GET %s params=%s", url, params)

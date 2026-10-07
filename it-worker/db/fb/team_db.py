@@ -4,10 +4,10 @@ from models.fb.team import Team
 class TeamDb(DbBase[Team]):
 	upsert_sql: str = """
         INSERT INTO fb_team (id, name, country_name, source_id)
-        VALUES (%s, %s, %s, %s) AS row
+        VALUES (%s, %s, %s, %s) AS new
         ON DUPLICATE KEY UPDATE
-            name = row.name,
-			country_name = row.country_name;
+            name = new.name,
+			country_name = new.country_name;
     """
 
 	insert_sql: str = """

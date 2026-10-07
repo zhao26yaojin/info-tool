@@ -25,34 +25,24 @@ class DbBase(ABC, Generic[T]):
         pass
 
     @property
-    @abstractmethod
     def select_source_ids_sql(self) -> str:
         """查询数据库现有全部/作用域内 ID 的 SQL 语句"""
-        pass
+        return ''
 
     @property
-    @abstractmethod
     def select_batch_source_ids_sql(self) -> str:
         """查询数据库现有全部/作用域内 ID 的 SQL 语句"""
-        pass
+        return ''
 
     @property
-    @abstractmethod
-    def soft_delete_sql(self) -> str:
-        """软删除的 SQL 语句 (UPDATE status=0 WHERE id IN %s)"""
-        pass
-
-    @property
-    @abstractmethod
     def delete_sql(self) -> str:
         """物理删除的 SQL 语句 (DELETE FROM table WHERE ...)"""
-        pass
+        return ''
 
     @property
-    @abstractmethod
     def delete_batch_sql(self) -> str:
         """物理删除的 SQL 语句 (DELETE FROM table WHERE ...)"""
-        pass
+        return ''
 
     @abstractmethod
     def to_upsert_params(self, item: T) -> Tuple:
@@ -62,11 +52,6 @@ class DbBase(ABC, Generic[T]):
     @abstractmethod
     def to_insert_params(self, item: T) -> Tuple:
         """将对象转换为 INSERT 的 SQL 参数元组"""
-        pass
-
-    @abstractmethod
-    def get_entity_id(self, item: T) -> Any:
-        """获取实体的唯一标识 ID (如 item.id)"""
         pass
 
     @staticmethod
