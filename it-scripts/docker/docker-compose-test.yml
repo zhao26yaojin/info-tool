@@ -1,0 +1,122 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: it-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      TZ: Asia/Shanghai
+    ports:
+      - 3306:3306
+    volumes:
+      - it-mysql-data:/var/lib/mysql
+      - ../db:/docker-entrypoint-initdb.d:ro
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - -h
+        - localhost
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - it-network
+  minio:
+    image: bitnamilegacy/minio:2025.7.23
+    container_name: it-minio
+    restart: always
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_DEFAULT_BUCKETS: ${MINIO_BUCKET}
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - it-minio-data:/bitnami/minio/data
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:9000/minio/health/live
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - it-network
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    container_name: it-imgproxy
+    restart: always
+    environment:
+      IMGPROXY_USE_S3: true
+      IMGPROXY_S3_ENDPOINT: http://minio:9000
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      IMGPROXY_UNSAFE: ${IMGPROXY_UNSAFE}
+    ports:
+      - 8080:8080
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks:
+      - it-network
+  spring-gateway:
+    build:
+      context: ../../it-server/it-spring/spring-gateway
+      dockerfile: Dockerfile
+    container_name: it-spring-gateway
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    networks:
+      - it-network
+    ports:
+      - 3033:3033
+  it-soccer-service:
+    build:
+      context: ../../it-server/it-fb/soccer-service
+      dockerfile: Dockerfile
+    container_name: it-soccer-service
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    networks:
+      - it-network
+  it-pc-web:
+    build:
+      context: ../../it-web/PC
+      dockerfile: Dockerfile
+    container_name: it-pc-web
+    restart: always
+    ports:
+      - 3030:3030
+    depends_on:
+      - spring-gateway
+    networks:
+      - it-network
+  it-mobile-web:
+    build:
+      context: ../../it-web/Mobile
+      dockerfile: Dockerfile
+    container_name: it-mobile-web
+    restart: always
+    ports:
+      - 3031:3031
+    depends_on:
+      - spring-gateway
+    networks:
+      - it-network
+networks:
+  it-network:
+    name: it-network
+    driver: bridge
+volumes:
+  it-mysql-data:
+  it-minio-data:
