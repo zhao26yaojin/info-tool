@@ -40,17 +40,17 @@ class StorageHandle:
         return keys
 
     def save_files(self, logo_urls: set, existing_keys: set, key_prefix: str) -> dict:
-        """并发下载/上传去重后的 logo 列表, 返回 {logo_url: avatar_ref}。"""
-        avatars = {}
+        """并发下载/上传去重后的 logo 列表, 返回 {logo_url: logo_ref}。"""
+        logos = {}
         with ThreadPoolExecutor(max_workers=LOGO_UPLOAD_WORKERS) as pool:
             futures = {pool.submit(self._save_file, url, existing_keys, key_prefix): url for url in logo_urls}
             for future in as_completed(futures):
                 url = futures[future]
                 try:
-                    avatars[url] = future.result()
+                    logos[url] = future.result()
                 except Exception:
                     logger.exception("save logo failed: %s", url)
-        return avatars
+        return logos
 
     def _save_file(self, file_url: str, existing_keys: set, key_prefix: str) -> str:
         key = f"{key_prefix}{os.path.basename(urlparse(file_url).path)}"

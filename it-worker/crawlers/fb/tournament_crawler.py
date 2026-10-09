@@ -1,10 +1,10 @@
 from crawlers.cus_base import CusCrawlerBase
-from models.fb.team import Team
+from models.fb.tournament import Tournament
 from storage.storage_handle import StorageHandle
 
-class TeamCrawler(CusCrawlerBase[Team]):
+class TournamentCrawler(CusCrawlerBase[Tournament]):
 	def __init__(self):
-		super().__init__('team')
+		super().__init__('tournament')
 
 	def crawl(self):
 		self.handle_storage()

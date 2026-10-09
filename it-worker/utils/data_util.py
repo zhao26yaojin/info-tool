@@ -31,10 +31,10 @@ def init_session() -> requests.Session:
 
 def format_task_param(task_param: str) -> str:
     if not task_param:
-        return 'merge=country;sync=team'
+        return 'merge=country,tournament,standing;sync=team'
 
     if task_param == 'all':
-        return 'merge=country;sync=team'
+        return 'merge=country,tournament,standing;sync=team'
 
     return task_param
 

@@ -6,7 +6,7 @@ class Team:
 
 	name: str
 
-	country_name: str
+	source_id: str
 
-	source_id: int
+	logo: str
 

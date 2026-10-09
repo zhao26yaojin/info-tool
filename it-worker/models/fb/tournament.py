@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
 @dataclass
-class Country:
+class Tournament:
 	id: int
 
 	name: str
 
-	logo: str
-
 	source_id: str
+
+	logo: str
 

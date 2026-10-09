@@ -1,7 +1,11 @@
 from crawlers.common.country_crawler import CountryCrawler
+from crawlers.fb.standing_crawler import StandingCrawler
 from crawlers.fb.team_crawler import TeamCrawler
+from crawlers.fb.tournament_crawler import TournamentCrawler
 from db.common.country_db import CountryDb
+from db.fb.standing_db import StandingDb
 from db.fb.team_db import TeamDb
+from db.fb.tournament_db import TournamentDb
 from enums.task_enum import TaskEnum
 
 import logging
@@ -15,7 +19,9 @@ logger = logging.getLogger(__name__)
 # 1. 建立 任务 -> (爬虫类, 数据库类) 的映射表，消除 match/case 冗余
 CRAWLER_MAP = {
     TaskEnum.COUNTRY: (CountryCrawler, CountryDb),
-    TaskEnum.TEAM: (TeamCrawler, TeamDb)
+    TaskEnum.TEAM: (TeamCrawler, TeamDb),
+    TaskEnum.TOURNAMENT: (TournamentCrawler, TournamentDb),
+    TaskEnum.STANDING: (StandingCrawler, StandingDb)
     # TaskEnum.STANDING: (StandingCrawler, StandingDb),
     # TaskEnum.TEAM: (TeamCrawler, TeamDb)
 }

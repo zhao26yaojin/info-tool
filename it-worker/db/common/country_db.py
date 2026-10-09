@@ -3,15 +3,15 @@ from models.common.country import Country
 
 class CountryDb(DbBase[Country]):
 	upsert_sql: str = """
-        INSERT INTO common_country (id, name, avatar, source_id)
+        INSERT INTO common_country (id, name, logo, source_id)
         VALUES (%s, %s, %s, %s) AS new
         ON DUPLICATE KEY UPDATE
             name = new.name,
-			avatar = new.avatar;
+			logo = new.logo;
     """
 
 	insert_sql: str = """
-            INSERT INTO common_country (id, name, avatar, source_id)
+            INSERT INTO common_country (id, name, logo, source_id)
             VALUES (%s, %s, %s, %s)
         """
 
@@ -22,12 +22,18 @@ class CountryDb(DbBase[Country]):
 
 	delete_sql: str = """
             DELETE FROM common_country
-            WHERE id = %s
+            WHERE source_id IN %s
+        """
+
+	select_id_by_name_sql: str = """
+            SELECT id, name
+            FROM common_country
+            WHERE name IN %s
         """
 
 	def to_upsert_params(self, item: Country):
-		return item.id, item.name, item.avatar, item.source_id
+		return item.id, item.name, item.logo, item.source_id
 
 	def to_insert_params(self, item: Country):
-		return item.id, item.name, item.avatar, item.source_id
+		return item.id, item.name, item.logo, item.source_id
 

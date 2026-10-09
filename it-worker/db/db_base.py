@@ -44,6 +44,12 @@ class DbBase(ABC, Generic[T]):
         """物理删除的 SQL 语句 (DELETE FROM table WHERE ...)"""
         return ''
 
+    @property
+    @abstractmethod
+    def select_id_by_name_sql(self) -> str:
+        """SELECT ID BY NAME 的 SQL 语句"""
+        pass
+
     @abstractmethod
     def to_upsert_params(self, item: T) -> Tuple:
         """将对象转换为 UPSERT 的 SQL 参数元组"""
@@ -67,6 +73,8 @@ class DbBase(ABC, Generic[T]):
         )
 
     def save(self, results: List[T], opt: OptEnum, batch_id: str = None):
+        conn = None
+
         try:
             conn = self.get_connection()
 
@@ -91,8 +99,8 @@ class DbBase(ABC, Generic[T]):
                         existed_source_ids = {row["source_id"] for row in cursor.fetchall()}
 
                         # 在 Python 内存中用 set 做差集计算，获取缺失项
-                        current_team_ids = {t.id for t in results}
-                        missing_team_ids = existed_source_ids - current_team_ids
+                        current_source_ids = {t.source_id for t in results}
+                        missing_source_ids = existed_source_ids - current_source_ids
 
                         # 批量 UPSERT：更新/插入最新爬取的数据，并确保 status 为 1 (正常)
                         params = [
@@ -101,14 +109,14 @@ class DbBase(ABC, Generic[T]):
                         ]
                         cursor.executemany(self.upsert_sql, params)
 
-                        # 批量软删除缺失数据
-                        if missing_team_ids:
+                        # 批量删除缺失数据
+                        if missing_source_ids:
                             # 注意：PyMySQL 处理 IN (%s) 时需要传入 tuple
-                            cursor.execute(self.delete_sql, (tuple(missing_team_ids),))
+                            cursor.execute(self.delete_sql, (tuple(missing_source_ids),))
 
                     # 在同一个事务中统一提交，确保原子性（要么全成功，要么全回滚）
                     conn.commit()
-                    print(f"同步完成！更新/插入 {len(results)} 条，软删除 {len(missing_team_ids)} 条。")
+                    print(f"同步完成！更新/插入 {len(results)} 条，删除 {len(missing_source_ids)} 条。")
 
                 case OptEnum.APPEND:
                     params = [
@@ -124,7 +132,7 @@ class DbBase(ABC, Generic[T]):
                 case OptEnum.REBUILD:
                     with conn.cursor() as cursor:
                         if batch_id:
-                            cursor.executemany(self.delete_batch_sql, (batch_id,))
+                            cursor.execute(self.delete_batch_sql, (batch_id,))
                         else:
                             cursor.execute(self.delete_sql)
 
@@ -137,6 +145,29 @@ class DbBase(ABC, Generic[T]):
 
                     conn.commit()
 
+        except Exception as e:
+            conn.rollback()
+            raise
+        finally:
+            conn.close()
+
+    def select_id_by_name(self, names: List[str]) -> dict:
+        conn = None
+
+        try:
+            conn = self.get_connection()
+
+            with conn.cursor() as cursor:
+                cursor.execute(self.select_id_by_name_sql, (names,))
+                rows = cursor.fetchall()
+
+                results = {row['name']: row['id'] for row in rows}
+
+            # 在同一个事务中统一提交，确保原子性（要么全成功，要么全回滚）
+            conn.commit()
+            print(f"获取id, name {len(results)} 条。")
+
+            return results
         except Exception as e:
             conn.rollback()
             raise
