@@ -40,13 +40,18 @@ def format_task_param(task_param: str) -> str:
 
 
 def get_tasks(task_param: str) -> Dict[TaskEnum, OptEnum]:
-    tasks = {}
+    task_results = {}
+    temp_tasks = {}
 
     for item in task_param.split(';'):
         opt, task_names = item.split('=', 1)
         opt_enum = OptEnum(opt)
 
         for task_name in task_names.split(','):
-            tasks[TaskEnum(task_name)] = opt_enum
+            temp_tasks[task_name] = opt_enum
 
-    return tasks
+    for task_enum in TaskEnum:
+        if task_enum.value in temp_tasks:
+            task_results[task_enum] = temp_tasks[task_enum.value]
+
+    return task_results

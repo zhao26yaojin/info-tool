@@ -163,13 +163,9 @@ class DbBase(ABC, Generic[T]):
 
                 results = {row['name']: row['id'] for row in rows}
 
-            # 在同一个事务中统一提交，确保原子性（要么全成功，要么全回滚）
-            conn.commit()
             print(f"获取id, name {len(results)} 条。")
 
             return results
-        except Exception as e:
-            conn.rollback()
-            raise
         finally:
-            conn.close()
+            if conn:
+                conn.close()

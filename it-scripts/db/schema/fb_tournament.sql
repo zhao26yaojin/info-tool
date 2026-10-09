@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS `common_country`;
-CREATE TABLE `common_country`  (
+DROP TABLE IF EXISTS `fb_tournament`;
+CREATE TABLE `fb_tournament`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT "id",
   `name` varchar(50) NOT NULL  COMMENT "名称",
-  `logo` varchar(255) NULL DEFAULT NULL  COMMENT "头像",
   `source_id` varchar(255) NOT NULL  COMMENT "爬虫源数据id（去重用）",
+  `logo` varchar(255) NULL DEFAULT NULL  COMMENT "头像",
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name`) USING BTREE COMMENT '名称索引',
   INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '国家表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '赛事表' ROW_FORMAT = Dynamic;
 

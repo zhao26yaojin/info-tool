@@ -6,12 +6,7 @@ class StandingCrawler(CusCrawlerBase[Standing]):
 	def __init__(self):
 		super().__init__('standing')
 
-	def crawl(self):
-		self.handle_storage()
-
-		self.handle_rel_id()
-
-	def handle_storage(self):
+	def handle_request(self):
 		pass
 
 
