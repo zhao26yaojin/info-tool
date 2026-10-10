@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import pymysql
 from pymysql.connections import Connection
-from typing import List, Generic, TypeVar, Tuple, Any
+from typing import List, Generic, TypeVar, Tuple, Set
 from pymysql.cursors import DictCursor
 from config import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 from enums.opt_enum import OptEnum
@@ -46,7 +46,7 @@ class DbBase(ABC, Generic[T]):
 
     @property
     @abstractmethod
-    def select_id_by_name_sql(self) -> str:
+    def select_source_id_by_name_sql(self) -> str:
         """SELECT ID BY NAME 的 SQL 语句"""
         pass
 
@@ -151,17 +151,17 @@ class DbBase(ABC, Generic[T]):
         finally:
             conn.close()
 
-    def select_id_by_name(self, names: List[str]) -> dict:
+    def select_id_by_name(self, names: Set[str]) -> dict:
         conn = None
 
         try:
             conn = self.get_connection()
 
             with conn.cursor() as cursor:
-                cursor.execute(self.select_id_by_name_sql, (names,))
+                cursor.execute(self.select_source_id_by_name_sql, (names,))
                 rows = cursor.fetchall()
 
-                results = {row['name']: row['id'] for row in rows}
+                results = {row['name']: row['source_id'] for row in rows}
 
             print(f"获取id, name {len(results)} 条。")
 

@@ -28,6 +28,8 @@ if __name__ == '__main__':
     # 解析命令行输入的参数
     args = parser.parse_args()
 
+    # args.task = '=,;'
+
     # 执行爬虫逻辑
     crawls(args.task)
 

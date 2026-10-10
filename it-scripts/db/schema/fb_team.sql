@@ -6,6 +6,6 @@ CREATE TABLE `fb_team`  (
   `logo` varchar(255) NULL DEFAULT NULL  COMMENT "头像",
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name`) USING BTREE COMMENT '名称索引',
-  INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
+  UNIQUE INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = 'team表' ROW_FORMAT = Dynamic;
 

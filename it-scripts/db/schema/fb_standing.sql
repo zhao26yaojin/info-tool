@@ -14,6 +14,6 @@ CREATE TABLE `fb_standing`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name`) USING BTREE COMMENT '名称索引',
   INDEX `idx_tournament_id`(`tournament_id`) USING BTREE COMMENT 'id索引',
-  INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
+  UNIQUE INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '积分榜表' ROW_FORMAT = Dynamic;
 

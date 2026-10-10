@@ -25,8 +25,8 @@ class CountryDb(DbBase[Country]):
             WHERE source_id IN %s
         """
 
-	select_id_by_name_sql: str = """
-            SELECT id, name
+	select_source_id_by_name_sql: str = """
+            SELECT source_id, name
             FROM common_country
             WHERE name IN %s
         """
