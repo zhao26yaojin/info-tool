@@ -12,11 +12,21 @@ class StandingCrawler(CusCrawlerBase[Standing]):
 
 
 	def handle_rel_id(self):
-		tournament_names = {r.tournament_name for r in self.results}
-		id_name_dict = TournamentDb().select_id_by_name(tournament_names)
-		
-		# 按名称关联 id; 找不到对应 id 的记录丢弃
-		self.results = [r for r in self.results if r.tournament_name in id_name_dict]
-		for r in self.results:
-			r.tournament_id = id_name_dict[r.tournament_name]
+		pending_items = [r for r in self.results if r.team_id is None]
+		names = {r.team_name for r in pending_items}
+		id_name_dict = TeamDb().select_id_by_name(names) if names else {}
+
+		for r in pending_items:
+			r.team_id = id_name_dict.get(r.team_name)
+		# 已有 id 的保留；新关联失败的丢弃
+		self.results = [r for r in self.results if r.team_id is not None]
+
+		pending_items = [r for r in self.results if r.tournament_id is None]
+		names = {r.tournament_name for r in pending_items}
+		id_name_dict = TournamentDb().select_id_by_name(names) if names else {}
+
+		for r in pending_items:
+			r.tournament_id = id_name_dict.get(r.tournament_name)
+		# 已有 id 的保留；新关联失败的丢弃
+		self.results = [r for r in self.results if r.tournament_id is not None]
 

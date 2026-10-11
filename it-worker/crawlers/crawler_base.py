@@ -53,7 +53,7 @@ class CrawlerBase(ABC, Generic[T]):
         if self.results and hasattr(self.results[0], LOGO):
             storage = StorageHandle()
 
-            logos = [r.logo for r in self.results]
+            logos = [r.logo for r in self.results if r.logo]
 
             # 一次性拉取已存在的 key, 避免每个 logo 都发一次 head_object
             key_prefix = f'logo/{self.table}/'
@@ -62,9 +62,11 @@ class CrawlerBase(ABC, Generic[T]):
             logo_refs = storage.save_files(set(logos), existing_keys, key_prefix)
 
             # 上传失败的丢弃; 成功的把原始 URL 替换为 s3://bucket/key 引用
-            self.results = [r for r in self.results if r.logo in logo_refs]
             for r in self.results:
-                r.logo = logo_refs[r.logo]
+                if r.logo in logo_refs:
+                    r.logo = logo_refs[r.logo]
+                else:
+                    r.logo = None
 
     def handle_rel_id(self):
         pass
