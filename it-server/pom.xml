@@ -18,9 +18,12 @@
 		<com.alibaba.cloud.version>2022.0.0.0</com.alibaba.cloud.version>
 	</properties>
 	<modules>
-		<module>it-common</module>
-		<module>it-sp</module>
-		<module>it-spring</module>
+		<module>common-db</module>
+		<module>common-redis</module>
+		<module>common-services</module>
+		<module>common-utils</module>
+		<module>soccer-service</module>
+		<module>spring-gateway</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -28,21 +31,6 @@
 				<groupId>com.zhl.it</groupId>
 				<artifactId>common-utils</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>33.4.0-jre</version>
-			</dependency>
-			<dependency>
-				<groupId>com.baomidou</groupId>
-				<artifactId>mybatis-plus-boot-starter</artifactId>
-				<version>3.5.3.2</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>3.0.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -68,11 +56,6 @@
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-gateway</artifactId>
 				<version>4.0.4</version>
-			</dependency>
-			<dependency>
-				<groupId>io.spring.javaformat</groupId>
-				<artifactId>spring-javaformat-maven-plugin</artifactId>
-				<version>0.0.39</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

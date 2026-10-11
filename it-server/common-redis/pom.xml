@@ -3,17 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.zhl.it</groupId>
-		<artifactId>it-common</artifactId>
+		<artifactId>it-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>common-db</artifactId>
+	<artifactId>common-redis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>common-db</name>
-	<description>common-db</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-	</dependencies>
+	<name>common-redis</name>
+	<description>common-redis</description>
 </project>

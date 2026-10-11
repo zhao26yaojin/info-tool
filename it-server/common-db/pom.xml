@@ -6,15 +6,14 @@
 		<artifactId>it-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>it-common</artifactId>
+	<artifactId>common-db</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>common</name>
-	<description>it-common</description>
-	<packaging>pom</packaging>
-	<modules>
-		<module>common-db</module>
-		<module>common-redis</module>
-		<module>common-services</module>
-		<module>common-utils</module>
-	</modules>
+	<name>common-db</name>
+	<description>common-db</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+	</dependencies>
 </project>
