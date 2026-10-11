@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 # 1. 建立 任务 -> (爬虫类, 数据库类) 的映射表，消除 match/case 冗余
 CRAWLER_MAP = {
     TaskEnum.COUNTRY: (CountryCrawler, CountryDb),
-    TaskEnum.TEAM: (TeamCrawler, TeamDb),
     TaskEnum.TOURNAMENT: (TournamentCrawler, TournamentDb),
+    TaskEnum.TEAM: (TeamCrawler, TeamDb),
     TaskEnum.STANDING: (StandingCrawler, StandingDb)
     # TaskEnum.STANDING: (StandingCrawler, StandingDb),
     # TaskEnum.TEAM: (TeamCrawler, TeamDb)

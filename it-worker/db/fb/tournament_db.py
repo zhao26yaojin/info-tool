@@ -25,8 +25,8 @@ class TournamentDb(DbBase[Tournament]):
             WHERE source_id IN %s
         """
 
-	select_source_id_by_name_sql: str = """
-            SELECT source_id, name
+	select_id_by_name_sql: str = """
+            SELECT id, name
             FROM fb_tournament
             WHERE name IN %s
         """

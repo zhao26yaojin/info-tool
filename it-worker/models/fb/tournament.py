@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-@dataclass
+@dataclass(kw_only=True)
 class Tournament:
-	id: int
+	id: int = None
 
 	name: str
 

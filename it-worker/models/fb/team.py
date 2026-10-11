@@ -1,12 +1,16 @@
 from dataclasses import dataclass
 
-@dataclass
+@dataclass(kw_only=True)
 class Team:
-	id: int
+	id: int = None
 
 	name: str
 
 	source_id: str
 
 	logo: str
+
+	tournament_name: str
+
+	tournament_id: int = None
 

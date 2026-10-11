@@ -1,12 +1,14 @@
 from dataclasses import dataclass
 
-@dataclass
+@dataclass(kw_only=True)
 class Country:
-	id: int
+	id: int = None
 
 	name: str
 
 	logo: str
 
 	source_id: str
+
+	region: str
 

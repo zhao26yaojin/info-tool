@@ -45,10 +45,9 @@ class DbBase(ABC, Generic[T]):
         return ''
 
     @property
-    @abstractmethod
-    def select_source_id_by_name_sql(self) -> str:
+    def select_id_by_name_sql(self) -> str:
         """SELECT ID BY NAME 的 SQL 语句"""
-        pass
+        return ''
 
     @abstractmethod
     def to_upsert_params(self, item: T) -> Tuple:
@@ -158,10 +157,10 @@ class DbBase(ABC, Generic[T]):
             conn = self.get_connection()
 
             with conn.cursor() as cursor:
-                cursor.execute(self.select_source_id_by_name_sql, (names,))
+                cursor.execute(self.select_id_by_name_sql, (names,))
                 rows = cursor.fetchall()
 
-                results = {row['name']: row['source_id'] for row in rows}
+                results = {row['name']: row['id'] for row in rows}
 
             print(f"获取id, name {len(results)} 条。")
 

@@ -1,14 +1,16 @@
 from dataclasses import dataclass
 
-@dataclass
+@dataclass(kw_only=True)
 class Standing:
-	id: int
+	id: int = None
 
-	name: str
+	team_name: str
+
+	team_id: int = None
 
 	tournament_name: str
 
-	tournament_id: int
+	tournament_id: int = None
 
 	source_id: str
 

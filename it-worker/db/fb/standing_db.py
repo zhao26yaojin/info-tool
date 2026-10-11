@@ -3,10 +3,10 @@ from models.fb.standing import Standing
 
 class StandingDb(DbBase[Standing]):
 	upsert_sql: str = """
-        INSERT INTO fb_standing (id, name, tournament_id, source_id, wins, draws, losses, goals_for, goals_against, goal_difference, points)
+        INSERT INTO fb_standing (id, team_id, tournament_id, source_id, wins, draws, losses, goals_for, goals_against, goal_difference, points)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) AS new
         ON DUPLICATE KEY UPDATE
-            name = new.name,
+            team_id = new.team_id,
 			tournament_id = new.tournament_id,
 			wins = new.wins,
 			draws = new.draws,
@@ -18,7 +18,7 @@ class StandingDb(DbBase[Standing]):
     """
 
 	insert_sql: str = """
-            INSERT INTO fb_standing (id, name, tournament_id, source_id, wins, draws, losses, goals_for, goals_against, goal_difference, points)
+            INSERT INTO fb_standing (id, team_id, tournament_id, source_id, wins, draws, losses, goals_for, goals_against, goal_difference, points)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
 
@@ -33,15 +33,9 @@ class StandingDb(DbBase[Standing]):
             WHERE source_id IN %s
         """
 
-	select_source_id_by_name_sql: str = """
-            SELECT source_id, name
-            FROM fb_standing
-            WHERE name IN %s
-        """
-
 	def to_upsert_params(self, item: Standing):
-		return item.id, item.name, item.tournament_id, item.source_id, item.wins, item.draws, item.losses, item.goals_for, item.goals_against, item.goal_difference, item.points
+		return item.id, item.team_id, item.tournament_id, item.source_id, item.wins, item.draws, item.losses, item.goals_for, item.goals_against, item.goal_difference, item.points
 
 	def to_insert_params(self, item: Standing):
-		return item.id, item.name, item.tournament_id, item.source_id, item.wins, item.draws, item.losses, item.goals_for, item.goals_against, item.goal_difference, item.points
+		return item.id, item.team_id, item.tournament_id, item.source_id, item.wins, item.draws, item.losses, item.goals_for, item.goals_against, item.goal_difference, item.points
 

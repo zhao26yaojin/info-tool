@@ -4,8 +4,10 @@ CREATE TABLE `common_country`  (
   `name` varchar(50) NOT NULL  COMMENT "名称",
   `logo` varchar(255) NULL DEFAULT NULL  COMMENT "头像",
   `source_id` varchar(255) NOT NULL  COMMENT "爬虫源数据id（去重用）",
+  `region` varchar(50) NOT NULL  COMMENT "区域",
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name`) USING BTREE COMMENT '名称索引',
-  UNIQUE INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
+  UNIQUE INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引',
+  INDEX `idx_region`(`region`) USING BTREE COMMENT '区域索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '国家表' ROW_FORMAT = Dynamic;
 

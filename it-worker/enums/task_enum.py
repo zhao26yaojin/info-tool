@@ -2,6 +2,6 @@ from enum import Enum
 
 class TaskEnum(Enum):
 	COUNTRY = 'country'
-	TEAM = 'team'
 	TOURNAMENT = 'tournament'
+	TEAM = 'team'
 	STANDING = 'standing'

@@ -1,4 +1,5 @@
 from crawlers.cus_base import CusCrawlerBase
+from db.fb.team_db import TeamDb
 from db.fb.tournament_db import TournamentDb
 from models.fb.standing import Standing
 
