@@ -26,6 +26,36 @@ services:
       retries: 10
     networks:
       - it-network
+  nacos:
+    image: nacos/nacos-server:v2.2.3
+    container_name: it-nacos
+    platform: linux/amd64
+    restart: always
+    environment:
+      MODE: ${NACOS_MODE}
+      NACOS_AUTH_ENABLE: ${NACOS_AUTH_ENABLE}
+      NACOS_AUTH_TOKEN: ${NACOS_AUTH_TOKEN}
+      NACOS_AUTH_IDENTITY_KEY: ${NACOS_AUTH_IDENTITY_KEY}
+      NACOS_AUTH_IDENTITY_VALUE: ${NACOS_AUTH_IDENTITY_VALUE}
+      JVM_XMS: 256m
+      JVM_XMX: 512m
+    ports:
+      - 8848:8848
+      - 9848:9848
+    volumes:
+      - it-nacos-data:/home/nacos/data
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8848/nacos/actuator/health
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    networks:
+      - it-network
   minio:
     image: bitnamilegacy/minio:2025.7.23
     container_name: it-minio
@@ -73,4 +103,5 @@ networks:
     driver: bridge
 volumes:
   it-mysql-data:
+  it-nacos-data:
   it-minio-data:

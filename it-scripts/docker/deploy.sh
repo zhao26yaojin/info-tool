@@ -37,16 +37,22 @@ docker-compose -f "$COMPOSE_FILE" up -d mysql minio imgproxy
 echo "Waiting for MySQL to be ready..."
 sleep 15
 
-
+echo ""
+echo "Starting Nacos ..."
+docker-compose -f "$COMPOSE_FILE" up -d nacos
+echo "Waiting for Nacos to be ready..."
+sleep 20
 
 echo ""
 echo "=============================="
 echo "  Middleware containers started!"
 echo "=============================="
 echo ""
-
+echo "Service URLs:"
+echo "  - Nacos Console: http://localhost:8848/nacos"
+echo ""
 echo "Next steps:"
-
+echo "  - Deploy Nacos     # 推送配置到 Nacos"
 echo "  - Deploy DB       # 创建业务数据库表"
 echo "  - Deploy Server    # 部署后端服务"
 echo "  - Deploy PC Web    # 部署 PC 前端"

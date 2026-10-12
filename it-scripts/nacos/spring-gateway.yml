@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: db-service
+          uri: lb://db-service
+          predicates:
+            - Path=/db/**
+        - id: soccer-service
+          uri: lb://soccer-service
+          predicates:
+            - Path=/soccer/**

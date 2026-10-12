@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY target/soccer-service-*.jar app.jar
 
-EXPOSE 3035
+EXPOSE 3036
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

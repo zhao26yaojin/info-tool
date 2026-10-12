@@ -8,4 +8,3 @@ CREATE TABLE `fb_tournament`  (
   INDEX `idx_name`(`name`) USING BTREE COMMENT '名称索引',
   UNIQUE INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '赛事表' ROW_FORMAT = Dynamic;
-

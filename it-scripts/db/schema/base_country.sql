@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `common_country`;
-CREATE TABLE `common_country`  (
+DROP TABLE IF EXISTS `base_country`;
+CREATE TABLE `base_country`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT "id",
   `name` varchar(50) NOT NULL  COMMENT "名称",
   `logo` varchar(255) NULL DEFAULT NULL  COMMENT "头像",
@@ -10,4 +10,3 @@ CREATE TABLE `common_country`  (
   UNIQUE INDEX `idx_source_id`(`source_id`) USING BTREE COMMENT '爬虫源数据id（去重用）索引',
   INDEX `idx_region`(`region`) USING BTREE COMMENT '区域索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '国家表' ROW_FORMAT = Dynamic;
-

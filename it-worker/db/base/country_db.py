@@ -1,9 +1,9 @@
 from db.db_base import DbBase
-from models.common.country import Country
+from models.base.country import Country
 
 class CountryDb(DbBase[Country]):
 	upsert_sql: str = """
-        INSERT INTO common_country (id, name, logo, source_id, region)
+        INSERT INTO base_country (id, name, logo, source_id, region)
         VALUES (%s, %s, %s, %s, %s) AS new
         ON DUPLICATE KEY UPDATE
             name = new.name,
@@ -12,17 +12,17 @@ class CountryDb(DbBase[Country]):
     """
 
 	insert_sql: str = """
-            INSERT INTO common_country (id, name, logo, source_id, region)
+            INSERT INTO base_country (id, name, logo, source_id, region)
             VALUES (%s, %s, %s, %s, %s)
         """
 
 	select_source_ids_sql: str = """
             SELECT source_id
-            FROM common_country
+            FROM base_country
         """
 
 	delete_sql: str = """
-            DELETE FROM common_country
+            DELETE FROM base_country
             WHERE source_id IN %s
         """
 

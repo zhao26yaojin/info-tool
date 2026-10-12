@@ -1,5 +1,5 @@
 server:
-  port: 3035
+  port: 3036
   servlet:
     context-path: /soccer
 spring:
