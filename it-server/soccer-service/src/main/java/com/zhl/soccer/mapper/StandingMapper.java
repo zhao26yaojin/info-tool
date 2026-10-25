@@ -5,16 +5,16 @@ import com.zhl.soccer.model.entity.FbStanding;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.lang.Long;
 import org.apache.ibatis.annotations.Mapper;
-import com.zhl.soccer.model.qo.StandingStandingQo;
+import com.zhl.soccer.model.qo.StandingQo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 @Mapper
 public interface StandingMapper extends BaseMapper<FbStanding> {
 
-	default LambdaQueryWrapper<FbStanding> getQueryWrapper(StandingStandingQo standingStandingQo){
+	default LambdaQueryWrapper<FbStanding> getQueryWrapper(StandingQo standingQo){
 		LambdaQueryWrapper<FbStanding> wrapper = Wrappers.lambdaQuery(FbStanding.class);
-		wrapper.eq(standingStandingQo.getId() != null, FbStanding::getId, standingStandingQo.getId());
-		wrapper.eq(standingStandingQo.getTournamentId() != null, FbStanding::getTournamentId, standingStandingQo.getTournamentId());
+		wrapper.eq(standingQo.getId() != null, FbStanding::getId, standingQo.getId());
+		wrapper.eq(standingQo.getTournamentId() != null, FbStanding::getTournamentId, standingQo.getTournamentId());
 
 		return wrapper;
 	}

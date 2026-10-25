@@ -7,6 +7,9 @@
 #
 # 注意:
 #   - 本脚本只负责中间件 (MySQL 必选, Nacos/Redis/Kafka/MinIO/imgproxy 按配置 enable), 不包含应用容器
+#   - 中间件按环境共享: 容器名为 {env}-mysql / {env}-nacos ..., 同一台机器上的多个项目共用一套.
+#     固定 compose project 名 ({env}-middleware) + --no-recreate, 保证已运行的共享中间件不会因
+#     本项目的 compose 配置与其他项目略有差异而被重建 (重启会影响其他项目).
 #   - 应用部署由 code-tool 的 Deploy Server / Deploy PC Web / Deploy Mobile Web 负责
 #   - Nacos 配置推送由 Deploy Nacos 步骤通过 OpenAPI 完成
 
@@ -30,18 +33,34 @@ echo "=============================="
 
 cd "$SCRIPT_DIR"
 
+DC="docker-compose -p ${ENV}-middleware -f $COMPOSE_FILE"
+
 # 启动中间件
 echo ""
 echo "Starting MySQL / minio / imgproxy ..."
-docker-compose -f "$COMPOSE_FILE" up -d mysql minio imgproxy
+$DC up -d --no-recreate mysql minio imgproxy
 echo "Waiting for MySQL to be ready..."
 sleep 15
 
 echo ""
 echo "Starting Nacos ..."
-docker-compose -f "$COMPOSE_FILE" up -d nacos
+$DC up -d --no-recreate nacos
 echo "Waiting for Nacos to be ready..."
 sleep 20
+
+# MinIO 为多项目共享, MINIO_DEFAULT_BUCKETS 只在容器首次创建时生效, 这里幂等地补建本项目 bucket
+echo ""
+echo "Ensuring MinIO bucket it-storage ..."
+for i in $(seq 1 30); do
+    if docker exec "${ENV}-minio" sh -c 'mc alias set local http://localhost:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" >/dev/null 2>&1 && mc mb --ignore-existing local/it-storage'; then
+        break
+    fi
+    if [ "$i" = "30" ]; then
+        echo "Failed to create MinIO bucket it-storage"
+        exit 1
+    fi
+    sleep 2
+done
 
 echo ""
 echo "=============================="
@@ -59,8 +78,8 @@ echo "  - Deploy PC Web    # 部署 PC 前端"
 echo "  - Deploy Mobile Web # 部署移动端前端"
 echo ""
 echo "Useful commands:"
-echo "  docker-compose -f $COMPOSE_FILE ps       # 查看服务状态"
-echo "  docker-compose -f $COMPOSE_FILE logs -f  # 查看日志"
-echo "  docker-compose -f $COMPOSE_FILE down     # 停止所有服务"
-echo "  docker-compose -f $COMPOSE_FILE down -v  # 停止并删除数据卷"
+echo "  $DC ps       # 查看服务状态"
+echo "  $DC logs -f  # 查看日志"
+echo "  $DC down     # 停止所有服务 (注意: 中间件被本机所有项目共享)"
+echo "  $DC down -v  # 停止并删除数据卷 (会清空所有项目的数据!)"
 

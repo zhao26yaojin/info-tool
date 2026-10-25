@@ -5,7 +5,7 @@ import java.lang.Long;
 import java.lang.String;
 
 @Data
-public class StandingStandingQo {
+public class StandingQo {
 
 	private Long id;
 

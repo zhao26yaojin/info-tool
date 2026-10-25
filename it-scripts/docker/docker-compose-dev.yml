@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: it-mysql
+    container_name: dev-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -11,7 +11,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - it-mysql-data:/var/lib/mysql
+      - dev-mysql-data:/var/lib/mysql
       - ../db:/docker-entrypoint-initdb.d:ro
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     healthcheck:
@@ -25,10 +25,10 @@ services:
       timeout: 5s
       retries: 10
     networks:
-      - it-network
+      - dev-network
   nacos:
     image: nacos/nacos-server:v2.2.3
-    container_name: it-nacos
+    container_name: dev-nacos
     platform: linux/amd64
     restart: always
     environment:
@@ -43,7 +43,7 @@ services:
       - 8848:8848
       - 9848:9848
     volumes:
-      - it-nacos-data:/home/nacos/data
+      - dev-nacos-data:/home/nacos/data
     healthcheck:
       test:
         - CMD
@@ -55,10 +55,10 @@ services:
       retries: 10
       start_period: 30s
     networks:
-      - it-network
+      - dev-network
   minio:
     image: bitnamilegacy/minio:2025.7.23
-    container_name: it-minio
+    container_name: dev-minio
     restart: always
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
@@ -68,7 +68,7 @@ services:
       - 9000:9000
       - 9001:9001
     volumes:
-      - it-minio-data:/bitnami/minio/data
+      - dev-minio-data:/bitnami/minio/data
     healthcheck:
       test:
         - CMD
@@ -79,10 +79,10 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - it-network
+      - dev-network
   imgproxy:
     image: darthsim/imgproxy:latest
-    container_name: it-imgproxy
+    container_name: dev-imgproxy
     restart: always
     environment:
       IMGPROXY_USE_S3: true
@@ -96,12 +96,12 @@ services:
       minio:
         condition: service_healthy
     networks:
-      - it-network
+      - dev-network
 networks:
-  it-network:
-    name: it-network
+  dev-network:
+    name: dev-network
     driver: bridge
 volumes:
-  it-mysql-data:
-  it-nacos-data:
-  it-minio-data:
+  dev-mysql-data:
+  dev-nacos-data:
+  dev-minio-data:

@@ -6,7 +6,7 @@ import java.lang.Long;
 import java.lang.String;
 
 @Data
-public class StandingStandingVo {
+public class StandingVo {
 
 	private Long id;
 

@@ -7,9 +7,9 @@ import com.zhl.utils.rest.PageParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.zhl.utils.rest.RestResponse;
+import com.zhl.soccer.model.qo.TeamQo;
 import com.zhl.soccer.service.TeamService;
-import com.zhl.soccer.model.qo.TeamTeamQo;
-import com.zhl.soccer.model.vo.TeamTeamVo;
+import com.zhl.soccer.model.vo.TeamVo;
 
 @RestController
 @RequestMapping("/team")
@@ -18,9 +18,9 @@ public class TeamController {
 	@Autowired
 	private TeamService teamService;
 
-	@GetMapping("/team/page")
-	public RestResponse<PageBean<TeamTeamVo>> page(TeamTeamQo teamTeamQo, PageParam pageParam){
-		PageBean<TeamTeamVo> voPageBean = teamService.selectVoPage(teamTeamQo, pageParam);
+	@GetMapping("/page")
+	public RestResponse<PageBean<TeamVo>> page(TeamQo teamQo, PageParam pageParam){
+		PageBean<TeamVo> voPageBean = teamService.selectVoPage(teamQo, pageParam);
 		return RestResponse.ok(voPageBean);
 	}
 

@@ -4,33 +4,33 @@ import org.springframework.beans.BeanUtils;
 import com.zhl.soccer.model.entity.FbTeam;
 import java.util.List;
 import com.google.common.collect.Lists;
-import com.zhl.soccer.model.vo.TeamTeamVo;
+import com.zhl.soccer.model.vo.TeamVo;
 
 public class TeamConverter {
 
-	public static List<TeamTeamVo> entityListToVoList(List<FbTeam> fbTeamList){
-		List<TeamTeamVo> teamVoList = Lists.newArrayList();
+	public static List<TeamVo> entityListToVoList(List<FbTeam> fbTeamList){
+		List<TeamVo> teamVoList = Lists.newArrayList();
 
 		for (FbTeam fbTeam : fbTeamList) {
 			if (fbTeam == null) {
 				return null;
 			}
-			TeamTeamVo teamTeamVo = entityToVo(fbTeam);
-			teamVoList.add(teamTeamVo);
+			TeamVo teamVo = entityToVo(fbTeam);
+			teamVoList.add(teamVo);
 		}
 
 		return teamVoList;
 	}
 
-	public static TeamTeamVo entityToVo(FbTeam fbTeam){
-		TeamTeamVo teamTeamVo = new TeamTeamVo();
+	public static TeamVo entityToVo(FbTeam fbTeam){
+		TeamVo teamVo = new TeamVo();
 
 		if (fbTeam == null) {
 			return null;
 		}
-		BeanUtils.copyProperties(fbTeam, teamTeamVo);
+		BeanUtils.copyProperties(fbTeam, teamVo);
 
-		return teamTeamVo;
+		return teamVo;
 	}
 
 }

@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<u-form :model="standingStandingQuery">
+		<u-form :model="standingQuery">
 		</u-form>
-		<u-button @click="onGetStandingStandingList">Query</u-button>
-		<u-form ::model="standingStandingList">
+		<u-button @click="onGetStandingList">Query</u-button>
+		<u-form ::model="standingList">
 			<u-form-item label="id" prop="id">
 				<u-input v-model="id">
 				</u-input>
@@ -57,22 +57,22 @@
 </template>
 <script setup>
 import { onLoad } from "@dcloudio/uni-app"
-import { getStandingList as getStandingStandingList } from "@/api/fb/standing"
+import { getList as getStandingList } from "@/api/fb/standing"
 import { reactive } from "vue"
 
-const standingStandingQuery = reactive({})
-const standingStandingList = reactive([])
-const onGetStandingStandingList = () => {
-	const { result } = getStandingStandingList(standingStandingQuery)
+const standingQuery = reactive({})
+const standingList = reactive([])
+const onGetStandingList = () => {
+	const { result } = getStandingList(standingQuery)
 
-	standingStandingList.splice(0, standingStandingList.length)
+	standingList.splice(0, standingList.length)
 
 	if (result && result.length > 0) {
-		standingStandingList.push({spread: result})
+		standingList.push({spread: result})
 	}
 
 }
-onLoad(() => onGetStandingStandingList())
+onLoad(() => onGetStandingList())
 
 </script>
 <style scoped>
