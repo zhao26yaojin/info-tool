@@ -1,10 +1,6 @@
 <template>
 	<div class="frame">
 		<el-form :inline="true" :model="teamQuery" class="form-inline">
-			<el-form-item label="id">
-				<el-input v-model="teamQuery.id" placeholder="id" clearable>
-				</el-input>
-			</el-form-item>
 			<el-form-item label="名称">
 				<el-input v-model="teamQuery.name" placeholder="name" clearable>
 				</el-input>
@@ -18,11 +14,9 @@
 			</el-form-item>
 		</el-form>
 		<el-table :data="teamPage" border>
-			<el-table-column prop="id" label="id">
-			</el-table-column>
 			<el-table-column prop="name" label="名称">
 			</el-table-column>
-			<el-table-column prop="logo" label="头像">
+			<el-table-column prop="logo" label="图标">
 			</el-table-column>
 			<el-table-column prop="tournamentId" label="id">
 			</el-table-column>
@@ -38,7 +32,6 @@ import { getPage as getTeamPage } from "@/api/fb/team"
 import { onMounted, reactive } from "vue"
 
 const teamQuery = reactive({
-	id: '',
 	name: '',
 	tournamentId: ''
 })

@@ -35,7 +35,9 @@ public class StandingService extends ServiceImpl<StandingMapper, FbStanding> {
 			List<FbTeam> fbTeamList = teamService.selectList(teamQo);
 			Map<Long, FbTeam> fbTeamMap = fbTeamList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t));
 
-			standingVoList.forEach(t -> t.setName(fbTeamMap.get(t.getId())));
+			standingVoList.forEach(t -> t.setTeamLogo(fbTeamMap.get(t.getId()).getLogo()));
+
+			standingVoList.forEach(t -> t.setTeamName(fbTeamMap.get(t.getId()).getName()));
 		}
 
 		return standingVoList;

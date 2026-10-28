@@ -8,8 +8,12 @@
 				<u-input v-model="id">
 				</u-input>
 			</u-form-item>
-			<u-form-item label="id" prop="teamId">
-				<u-input v-model="teamId">
+			<u-form-item label="图标" prop="teamLogo">
+				<u-input v-model="teamLogo">
+				</u-input>
+			</u-form-item>
+			<u-form-item label="名称" prop="teamName">
+				<u-input v-model="teamName">
 				</u-input>
 			</u-form-item>
 			<u-form-item label="id" prop="tournamentId">
@@ -46,10 +50,6 @@
 			</u-form-item>
 			<u-form-item label="积分" prop="points">
 				<u-input v-model="points">
-				</u-input>
-			</u-form-item>
-			<u-form-item label="名称" prop="name">
-				<u-input v-model="name">
 				</u-input>
 			</u-form-item>
 		</u-form>

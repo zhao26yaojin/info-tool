@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="sidebar">
 			<h5 class="title">info tool</h5>
-			<el-menu height="100%" background-color="#ffb8e7" active-text-color="#04718" text-color="#fff" router>
+			<el-menu height="100%" background-color="#545C64FF" active-text-color="#aba39b" text-color="#fff" router>
 				<el-sub-menu>
 					<template #title>
 						<span>soccer</span>
@@ -28,7 +28,7 @@
 
 .sidebar {
 	width: 200px;
-	background-color: #ffb8e7;
+	background-color: #545C64FF;
 }
 
 .title {

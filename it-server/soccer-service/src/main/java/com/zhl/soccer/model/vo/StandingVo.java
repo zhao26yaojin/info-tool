@@ -10,7 +10,11 @@ public class StandingVo {
 
 	private Long id;
 
+	private String teamLogo;
+
 	private Long teamId;
+
+	private String teamName;
 
 	private Long tournamentId;
 
@@ -29,7 +33,5 @@ public class StandingVo {
 	private Integer goalDifference;
 
 	private Integer points;
-
-	private String name;
 
 }
