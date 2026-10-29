@@ -20,6 +20,8 @@ public class StandingVo {
 
 	private String sourceId;
 
+	private Integer matches;
+
 	private Integer wins;
 
 	private Integer draws;

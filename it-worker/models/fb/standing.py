@@ -14,6 +14,8 @@ class Standing:
 
 	source_id: str
 
+	matches: int
+
 	wins: int
 
 	draws: int

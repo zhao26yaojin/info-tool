@@ -2,7 +2,7 @@
 	<div class="frame">
 		<el-form :inline="true" :model="standingQuery" class="form-inline">
 			<el-form-item label="id">
-				<el-select v-model="standingQuery.tournamentId" placeholder="tournamentId" clearable>
+				<el-select v-model="standingQuery.tournamentId" placeholder="tournamentId" clearable style="width: 160px">
 					<el-option v-for="item in tournamentList" :key="item.id" :label="item.name" :value="item.id">
 					</el-option>
 				</el-select>
@@ -15,6 +15,8 @@
 			<el-table-column prop="teamLogo" label="图标">
 			</el-table-column>
 			<el-table-column prop="teamName" label="名称">
+			</el-table-column>
+			<el-table-column prop="matches" label="场次">
 			</el-table-column>
 			<el-table-column prop="wins" label="胜">
 			</el-table-column>
@@ -35,8 +37,20 @@
 </template>
 <script setup>
 import { getList as getStandingList } from "@/api/fb/standing"
+import { getList as getTournamentList } from "@/api/fb/tournament"
 import { onMounted, reactive } from "vue"
 
+const tournamentList = reactive([])
+const onGetTournamentList = async () => {
+	const { result } = await getTournamentList()
+
+	tournamentList.splice(0, tournamentList.length)
+
+	if (result && result.length > 0) {
+		tournamentList.push(...result)
+	}
+
+}
 const standingQuery = reactive({tournamentId: ''})
 const standingList = reactive([])
 const onGetStandingList = async () => {
@@ -49,7 +63,11 @@ const onGetStandingList = async () => {
 	}
 
 }
-onMounted(() => onGetStandingList())
+onMounted(() => {
+	onGetStandingList()
+
+	onGetTournamentList()
+})
 
 </script>
 <style scoped>

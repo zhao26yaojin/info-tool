@@ -24,6 +24,10 @@
 				<u-input v-model="sourceId">
 				</u-input>
 			</u-form-item>
+			<u-form-item label="场次" prop="matches">
+				<u-input v-model="matches">
+				</u-input>
+			</u-form-item>
 			<u-form-item label="胜" prop="wins">
 				<u-input v-model="wins">
 				</u-input>

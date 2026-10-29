@@ -4,6 +4,7 @@ CREATE TABLE `fb_standing`  (
   `team_id` bigint(0) NOT NULL  COMMENT "id",
   `tournament_id` bigint(0) NOT NULL  COMMENT "id",
   `source_id` varchar(255) NOT NULL  COMMENT "爬虫源数据id（去重用）",
+  `matches` int(0) NULL DEFAULT NULL  COMMENT "场次",
   `wins` int(0) NULL DEFAULT NULL  COMMENT "胜",
   `draws` int(0) NULL DEFAULT NULL  COMMENT "平",
   `losses` int(0) NULL DEFAULT NULL  COMMENT "负",

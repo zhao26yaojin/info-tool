@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `base_country`;
 CREATE TABLE `base_country`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT "id",
   `name` varchar(50) NOT NULL  COMMENT "名称",
-  `logo` varchar(255) NULL DEFAULT NULL  COMMENT "头像",
+  `logo` varchar(255) NULL DEFAULT NULL  COMMENT "图标",
   `source_id` varchar(255) NOT NULL  COMMENT "爬虫源数据id（去重用）",
   `region` varchar(50) NOT NULL  COMMENT "区域",
   PRIMARY KEY (`id`) USING BTREE,
