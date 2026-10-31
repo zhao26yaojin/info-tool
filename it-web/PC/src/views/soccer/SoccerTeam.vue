@@ -17,6 +17,10 @@
 			<el-table-column prop="name" label="名称">
 			</el-table-column>
 			<el-table-column prop="logo" label="图标">
+				<template #default="{ row }">
+					<el-image v-if="row.logo" :src="imgUrl(row.logo)" fit="contain" style="width: 24px; height: 24px" lazy>
+					</el-image>
+				</template>
 			</el-table-column>
 			<el-table-column prop="tournamentId" label="id">
 			</el-table-column>
@@ -28,6 +32,7 @@
 	</div>
 </template>
 <script setup>
+import { imgUrl } from "@/utils/image"
 import { getPage as getTeamPage } from "@/api/fb/team"
 import { onMounted, reactive } from "vue"
 

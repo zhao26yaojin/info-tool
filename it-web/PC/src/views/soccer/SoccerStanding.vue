@@ -13,6 +13,10 @@
 		</el-form>
 		<el-table :data="standingList" border>
 			<el-table-column prop="teamLogo" label="图标">
+				<template #default="{ row }">
+					<el-image v-if="row.teamLogo" :src="imgUrl(row.teamLogo)" fit="contain" style="width: 24px; height: 24px" lazy>
+					</el-image>
+				</template>
 			</el-table-column>
 			<el-table-column prop="teamName" label="名称">
 			</el-table-column>
@@ -36,6 +40,7 @@
 	</div>
 </template>
 <script setup>
+import { imgUrl } from "@/utils/image"
 import { getList as getStandingList } from "@/api/fb/standing"
 import { getList as getTournamentList } from "@/api/fb/tournament"
 import { onMounted, reactive } from "vue"
