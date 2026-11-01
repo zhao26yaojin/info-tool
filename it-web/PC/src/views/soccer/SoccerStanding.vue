@@ -12,13 +12,16 @@
 			</el-form-item>
 		</el-form>
 		<el-table :data="standingList" border>
-			<el-table-column prop="teamLogo" label="图标">
-				<template #default="{ row }">
-					<el-image v-if="row.teamLogo" :src="imgUrl(row.teamLogo)" fit="contain" style="width: 24px; height: 24px" lazy>
-					</el-image>
-				</template>
+			<el-table-column type="index" width="50">
 			</el-table-column>
-			<el-table-column prop="teamName" label="名称">
+			<el-table-column label="球队">
+				<template #default="{ row }">
+					<span>
+						<el-image v-if="row.teamLogo" :src="imgUrl(row.teamLogo)" fit="contain" style="width: 24px; height: 24px" lazy>
+						</el-image>
+					</span>
+					<span style="margin-left: 8px">{{ row.teamName }}</span>
+				</template>
 			</el-table-column>
 			<el-table-column prop="matches" label="场次">
 			</el-table-column>
@@ -69,9 +72,9 @@ const onGetStandingList = async () => {
 
 }
 onMounted(() => {
-	onGetStandingList()
-
 	onGetTournamentList()
+
+	onGetStandingList()
 })
 
 </script>
