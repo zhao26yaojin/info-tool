@@ -49,6 +49,11 @@ class DbBase(ABC, Generic[T]):
         """SELECT ID BY NAME 的 SQL 语句"""
         return ''
 
+    @property
+    def select_id_by_source_id_sql(self) -> str:
+        """SELECT ID BY NAME 的 SQL 语句"""
+        return ''
+
     @abstractmethod
     def to_upsert_params(self, item: T) -> Tuple:
         """将对象转换为 UPSERT 的 SQL 参数元组"""
@@ -163,6 +168,25 @@ class DbBase(ABC, Generic[T]):
                 results = {row['name']: row['id'] for row in rows}
 
             print(f"获取id, name {len(results)} 条。")
+
+            return results
+        finally:
+            if conn:
+                conn.close()
+
+    def select_id_by_source_id(self, source_ids: Set[str]) -> dict:
+        conn = None
+
+        try:
+            conn = self.get_connection()
+
+            with conn.cursor() as cursor:
+                cursor.execute(self.select_id_by_source_id_sql, (source_ids,))
+                rows = cursor.fetchall()
+
+                results = {row['source_id']: row['id'] for row in rows}
+
+            print(f"获取id, source_id {len(results)} 条。")
 
             return results
         finally:

@@ -22,7 +22,7 @@
 					</el-image>
 				</template>
 			</el-table-column>
-			<el-table-column prop="tournamentId" label="id">
+			<el-table-column prop="tournamentId" label="id" min-width="60px">
 			</el-table-column>
 		</el-table>
 		<div>
@@ -60,6 +60,7 @@ onMounted(() => onGetTeamPage())
 	width: 800px;
 	margin: auto;
 	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 .form-inline {

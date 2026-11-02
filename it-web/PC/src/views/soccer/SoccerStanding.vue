@@ -14,7 +14,7 @@
 		<el-table :data="standingList" border>
 			<el-table-column type="index" width="50">
 			</el-table-column>
-			<el-table-column label="球队">
+			<el-table-column label="球队" min-width="120px">
 				<template #default="{ row }">
 					<span>
 						<el-image v-if="row.teamLogo" :src="imgUrl(row.teamLogo)" fit="contain" style="width: 24px; height: 24px" lazy>
@@ -23,21 +23,21 @@
 					<span style="margin-left: 8px">{{ row.teamName }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="matches" label="场次">
+			<el-table-column prop="matches" label="场次" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="wins" label="胜">
+			<el-table-column prop="wins" label="胜" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="draws" label="平">
+			<el-table-column prop="draws" label="平" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="losses" label="负">
+			<el-table-column prop="losses" label="负" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="goalsFor" label="进球">
+			<el-table-column prop="goalsFor" label="进球" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="goalsAgainst" label="失球">
+			<el-table-column prop="goalsAgainst" label="失球" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="goalDifference" label="净胜球">
+			<el-table-column prop="goalDifference" label="净胜球" min-width="60px">
 			</el-table-column>
-			<el-table-column prop="points" label="积分">
+			<el-table-column prop="points" label="积分" min-width="60px">
 			</el-table-column>
 		</el-table>
 	</div>
@@ -72,9 +72,9 @@ const onGetStandingList = async () => {
 
 }
 onMounted(() => {
-	onGetTournamentList()
-
 	onGetStandingList()
+
+	onGetTournamentList()
 })
 
 </script>
@@ -83,6 +83,7 @@ onMounted(() => {
 	width: 800px;
 	margin: auto;
 	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 .form-inline {

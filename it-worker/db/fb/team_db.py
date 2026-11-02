@@ -26,11 +26,11 @@ class TeamDb(DbBase[Team]):
             WHERE source_id IN %s
         """
 
-	select_id_by_name_sql: str = """
-            SELECT id, name
-            FROM fb_team
-            WHERE name IN %s
-        """
+	select_id_by_source_id_sql: str = """
+                SELECT id, source_id
+                FROM fb_team
+                WHERE source_id IN %s
+            """
 
 	def to_upsert_params(self, item: Team):
 		return item.id, item.name, item.source_id, item.logo, item.tournament_id
