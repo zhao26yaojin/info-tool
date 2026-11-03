@@ -16,6 +16,10 @@ public interface StandingMapper extends BaseMapper<FbStanding> {
 		wrapper.eq(standingQo.getId() != null, FbStanding::getId, standingQo.getId());
 		wrapper.eq(standingQo.getTournamentId() != null, FbStanding::getTournamentId, standingQo.getTournamentId());
 
+		wrapper.orderByDesc(FbStanding::getPoints);
+
+		wrapper.orderByDesc(FbStanding::getGoalDifference);
+
 		return wrapper;
 	}
 

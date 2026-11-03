@@ -72,9 +72,9 @@ const onGetStandingList = async () => {
 
 }
 onMounted(() => {
-	onGetStandingList()
-
 	onGetTournamentList()
+
+	onGetStandingList()
 })
 
 </script>
