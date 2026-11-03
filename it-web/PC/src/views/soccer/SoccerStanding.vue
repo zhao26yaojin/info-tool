@@ -11,33 +11,35 @@
 				<el-button type="primary" @click="onGetStandingList">Query</el-button>
 			</el-form-item>
 		</el-form>
-		<el-table :data="standingList" border>
-			<el-table-column type="index" width="50">
+		<el-table :data="standingList" :border="false">
+			<el-table-column align="center" type="index" width="50">
 			</el-table-column>
-			<el-table-column label="球队" min-width="120px">
+			<el-table-column label="球队" align="center" min-width="120px">
 				<template #default="{ row }">
-					<span>
-						<el-image v-if="row.teamLogo" :src="imgUrl(row.teamLogo)" fit="contain" style="width: 24px; height: 24px" lazy>
-						</el-image>
-					</span>
-					<span style="margin-left: 8px">{{ row.teamName }}</span>
+					<div style="display: flex; align-items: center; justify-content: center">
+						<span style="display: flex">
+							<el-image v-if="row.teamLogo" :src="imgUrl(row.teamLogo)" fit="contain" style="width: 24px; height: 24px" lazy>
+							</el-image>
+						</span>
+						<span style="margin-left: 8px">{{ row.teamName }}</span>
+					</div>
 				</template>
 			</el-table-column>
-			<el-table-column prop="matches" label="场次" min-width="60px">
+			<el-table-column prop="matches" label="场次" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="wins" label="胜" min-width="60px">
+			<el-table-column prop="wins" label="胜" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="draws" label="平" min-width="60px">
+			<el-table-column prop="draws" label="平" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="losses" label="负" min-width="60px">
+			<el-table-column prop="losses" label="负" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="goalsFor" label="进球" min-width="60px">
+			<el-table-column prop="goalsFor" label="进球" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="goalsAgainst" label="失球" min-width="60px">
+			<el-table-column prop="goalsAgainst" label="失球" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="goalDifference" label="净胜球" min-width="60px">
+			<el-table-column prop="goalDifference" label="净胜球" min-width="60px" align="center">
 			</el-table-column>
-			<el-table-column prop="points" label="积分" min-width="60px">
+			<el-table-column prop="points" label="积分" min-width="60px" align="center">
 			</el-table-column>
 		</el-table>
 	</div>
@@ -72,9 +74,9 @@ const onGetStandingList = async () => {
 
 }
 onMounted(() => {
-	onGetTournamentList()
-
 	onGetStandingList()
+
+	onGetTournamentList()
 })
 
 </script>
