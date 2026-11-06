@@ -38,7 +38,10 @@ import { onMounted, reactive } from "vue"
 
 const teamQuery = reactive({
 	name: '',
-	tournamentId: ''
+	tournamentId: '',
+	current: 1,
+	size: 10,
+	total: 0
 })
 const teamPage = reactive([])
 const onGetTeamPage = async () => {
@@ -48,9 +51,14 @@ const onGetTeamPage = async () => {
 	teamPage.splice(0, teamPage.length)
 
 	if (result.records && result.records.length > 0) {
-		teamPage.push(...result)
+		teamPage.push(...result.records)
 	}
 
+}
+const onTeamPageChange = num => {
+	teamQuery.current = num
+
+	onGetTeamPage()
 }
 onMounted(() => onGetTeamPage())
 

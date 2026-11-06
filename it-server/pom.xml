@@ -29,6 +29,11 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.zhl.it</groupId>
+				<artifactId>common-services</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.zhl.it</groupId>
 				<artifactId>common-utils</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>

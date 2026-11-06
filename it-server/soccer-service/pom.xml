@@ -13,6 +13,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.zhl.it</groupId>
+			<artifactId>common-services</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zhl.it</groupId>
 			<artifactId>common-utils</artifactId>
 		</dependency>
 		<dependency>
