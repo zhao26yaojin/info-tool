@@ -1,4 +1,4 @@
-import Home from "@/pages/home"
+import Home from "@/layouts/home"
 import { createRouter, createWebHashHistory } from "vue-router"
 
 const constRoutes = [
